@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guiche;
+use App\Models\Om;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-
-abstract  class BaseController
+class GuicheController extends Controller
 {
-
-    protected $classe;
 
     public function index(Request $request)
     {
-       return $this->classe::paginate($request->per_page);
+        return Guiche::paginate($request->per_page);
 
     }
 
@@ -20,14 +20,14 @@ abstract  class BaseController
     {
 
         return response()
-            ->json($this->classe::create($request->all()),  201);
+            ->json(Guiche::create($request->all())->load('panel.om'),  201);
 
     }
 
     public function show($id)
     {
 
-        $recurso = $this->classe::find($id);
+        $recurso = Guiche::find($id);
 
         if (is_null($recurso)) {
 
@@ -42,7 +42,7 @@ abstract  class BaseController
     public function update(int $id, Request $request)
     {
 
-        $recurso = $this->classe::find($id);
+        $recurso = Guiche::find($id);
 
 
         if (is_null($recurso)) {
@@ -63,7 +63,7 @@ abstract  class BaseController
     public function destroy($id)
     {
 
-        $recurso = $this->classe::destroy($id);
+        $recurso = Guiche::destroy($id);
 
         if ($recurso === 0) {
 
@@ -77,4 +77,18 @@ abstract  class BaseController
 
     }
 
+
+    public function indexLoad(Request $request)
+    {
+        return Guiche::paginate($request->per_page)->load('panel.om');
+
+    }
+
+    public function myGuiche(Request $request)
+    {
+        $ipAddress = $request->ip();
+
+        return Guiche::where('ip', $ipAddress)->first()->load('panel.om');
+
+    }
 }

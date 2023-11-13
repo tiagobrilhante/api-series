@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CriarTabelaUsers extends Migration
+class CriarTabelaPublicoAlvos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,18 @@ class CriarTabelaUsers extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('publico_alvos', function (Blueprint $table) {
             $table->id();
-            $table->string('cpf')->unique();
-            $table->string('nome');
-            $table->string('nome_guerra');
-            $table->string('posto_grad');
             $table->string('tipo');
-            $table->string('password');
-            $table->boolean('reset');
+            $table->string('cor');
             $table->bigInteger('om_id')->unsigned()->index();
 
-            $table->timestamps();
             $table->foreign('om_id')
                 ->references('id')
-                ->on('oms');
+                ->on('oms')->onDelete('cascade');
 
-
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -40,6 +35,6 @@ class CriarTabelaUsers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('publico_alvos');
     }
 }

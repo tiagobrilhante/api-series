@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Models\User;
-use App\Models\Vetscipen;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -42,13 +42,9 @@ class AuthServiceProvider extends ServiceProvider
 
             $token = str_replace('Bearer ', '', $authorizationHeader);
 
-            $dadosAutenticacao = JWT::decode($token, env('JWT_KEY'), ['HS256']);
+            $dadosAutenticacao = JWT::decode($token,env('JWT_KEY'),['HS256']);
 
-
-            return User::where('email', $dadosAutenticacao->email)->first();
-
-
+            return User::where('cpf', $dadosAutenticacao->cpf)->first();
         });
-
     }
 }

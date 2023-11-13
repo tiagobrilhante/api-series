@@ -13,12 +13,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            UserSeeder::class,
-            TotemConfigSeeder::class,
-            AssuntosSeeder::class,
-            ImasgemsSeeder::class,
-            EventosSeeder::class
-        ]);
+         $this->call([
+             OmSeeder::class,
+             UserSeeder::class,
+             PanelSeeder::class,
+             GuicheSeeder::class,
+             ChamadaNormalParametroSeeder::class,
+             ChamadaPrioridadeParametroSeeder::class,
+             TipoAtendimentoSeeder::class,
+             PublicoAlvoSeeder::class,
+             ChamadaSeeder::class,
+             TipoAtendimentoChamadaSeeder::class,
+             MensagemSeeder::class
+         ]);
     }
 }
